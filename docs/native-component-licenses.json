@@ -1,0 +1,180 @@
+{
+  "bundle": "@img/sharp-win32-x64@0.35.5",
+  "source": "Bundled README.md and versions.json from the locked official npm package",
+  "readmeSha256": "3d083ada5ebafe1e6c227daa7b061d4254b61df4a3901c359ffdeac817ce5866",
+  "components": [
+    {
+      "component": "aom",
+      "version": "3.15.1",
+      "upstreamName": "aom",
+      "licenseDescription": "BSD 2-Clause + [Alliance for Open Media Patent License 1.0](https://aomedia.org/license/patent-license/)"
+    },
+    {
+      "component": "archive",
+      "version": "3.8.9",
+      "upstreamName": "libarchive",
+      "licenseDescription": "BSD 2-Clause"
+    },
+    {
+      "component": "cairo",
+      "version": "1.18.6",
+      "upstreamName": "cairo",
+      "licenseDescription": "Mozilla Public License 1.1"
+    },
+    {
+      "component": "cgif",
+      "version": "0.5.4",
+      "upstreamName": "cgif",
+      "licenseDescription": "MIT License"
+    },
+    {
+      "component": "exif",
+      "version": "0.6.26",
+      "upstreamName": "libexif",
+      "licenseDescription": "LGPLv3"
+    },
+    {
+      "component": "expat",
+      "version": "2.8.5",
+      "upstreamName": "expat",
+      "licenseDescription": "MIT License"
+    },
+    {
+      "component": "ffi",
+      "version": "3.8.0",
+      "upstreamName": "libffi",
+      "licenseDescription": "MIT License"
+    },
+    {
+      "component": "fontconfig",
+      "version": "2.18.3",
+      "upstreamName": "fontconfig",
+      "licenseDescription": "[fontconfig License](https://gitlab.freedesktop.org/fontconfig/fontconfig/blob/main/COPYING) (BSD-like)"
+    },
+    {
+      "component": "freetype",
+      "version": "2.14.3",
+      "upstreamName": "freetype",
+      "licenseDescription": "[freetype License](https://git.savannah.gnu.org/cgit/freetype/freetype2.git/tree/docs/FTL.TXT) (BSD-like)"
+    },
+    {
+      "component": "fribidi",
+      "version": "1.0.17",
+      "upstreamName": "fribidi",
+      "licenseDescription": "LGPLv3"
+    },
+    {
+      "component": "glib",
+      "version": "2.90.0",
+      "upstreamName": "glib",
+      "licenseDescription": "LGPLv3"
+    },
+    {
+      "component": "harfbuzz",
+      "version": "14.5.0",
+      "upstreamName": "harfbuzz",
+      "licenseDescription": "MIT License"
+    },
+    {
+      "component": "heif",
+      "version": "1.23.5",
+      "upstreamName": "libheif",
+      "licenseDescription": "LGPLv3"
+    },
+    {
+      "component": "highway",
+      "version": "1.4.0",
+      "upstreamName": "highway",
+      "licenseDescription": "BSD 3-Clause"
+    },
+    {
+      "component": "imagequant",
+      "version": "2.4.1",
+      "upstreamName": "libimagequant",
+      "licenseDescription": "[BSD 2-Clause](https://github.com/lovell/libimagequant/blob/main/COPYRIGHT)"
+    },
+    {
+      "component": "lcms",
+      "version": "2.19.1",
+      "upstreamName": "lcms",
+      "licenseDescription": "MIT License"
+    },
+    {
+      "component": "mozjpeg",
+      "version": "0826579",
+      "upstreamName": "mozjpeg",
+      "licenseDescription": "[zlib License, IJG License, BSD 3-Clause](https://github.com/mozilla/mozjpeg/blob/master/LICENSE.md)"
+    },
+    {
+      "component": "pango",
+      "version": "1.58.2",
+      "upstreamName": "pango",
+      "licenseDescription": "LGPLv3"
+    },
+    {
+      "component": "pixman",
+      "version": "0.46.4",
+      "upstreamName": "pixman",
+      "licenseDescription": "MIT License"
+    },
+    {
+      "component": "png",
+      "version": "1.6.58",
+      "upstreamName": "libpng",
+      "licenseDescription": "[libpng License](https://github.com/pnggroup/libpng/blob/master/LICENSE)"
+    },
+    {
+      "component": "proxy-libintl",
+      "version": "0.5",
+      "upstreamName": "proxy-libintl",
+      "licenseDescription": "LGPLv3"
+    },
+    {
+      "component": "rsvg",
+      "version": "2.63.2",
+      "upstreamName": "librsvg",
+      "licenseDescription": "LGPLv3"
+    },
+    {
+      "component": "tiff",
+      "version": "4.7.2",
+      "upstreamName": "libtiff",
+      "licenseDescription": "[libtiff License](https://gitlab.com/libtiff/libtiff/blob/master/LICENSE.md) (BSD-like)"
+    },
+    {
+      "component": "uhdr",
+      "version": "2.0.2",
+      "upstreamName": "libultrahdr",
+      "licenseDescription": "MIT License"
+    },
+    {
+      "component": "vips",
+      "version": "8.18.7",
+      "upstreamName": "libvips",
+      "licenseDescription": "LGPLv3"
+    },
+    {
+      "component": "webp",
+      "version": "1.6.0",
+      "upstreamName": "libwebp",
+      "licenseDescription": "New BSD License"
+    },
+    {
+      "component": "xml2",
+      "version": "2.15.4",
+      "upstreamName": "libxml2",
+      "licenseDescription": "MIT License"
+    },
+    {
+      "component": "zlib-ng",
+      "version": "2.3.3",
+      "upstreamName": "zlib-ng",
+      "licenseDescription": "[zlib License](https://github.com/zlib-ng/zlib-ng/blob/develop/LICENSE.md)"
+    }
+  ],
+  "unversionedReadmeEntries": [
+    "---------------",
+    "libnsgif"
+  ],
+  "status": "Preparation inventory only. Other platforms and actual redistribution obligations require review; no native binaries included in source release."
+}

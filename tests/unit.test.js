@@ -1,0 +1,35 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import { mkdirSync, writeFileSync, symlinkSync } from 'node:fs';
+import { join } from 'node:path';
+import { config } from '../src/config.js';
+import { openDatabase } from '../src/db.js';
+import { passwordHash,passwordValid,equal,rate,session,hash,cookie,cookieName } from '../src/security.js';
+import { markdown,postInput,savePost,publicPosts,deletePost,tagsFor } from '../src/content.js';
+import { fixture,account,sample } from './helpers.js';
+
+test('configuration fails closed for public binding and unsafe production',()=>{
+  for(const env of [{BLOG_HOST:'0.0.0.0'},{BLOG_MODE:'production'},{BLOG_DATA_DIR:'../other'},{BLOG_DATA_DIR:'D:/foreign'},{BLOG_DATA_DIR:'src/data'},{BLOG_ORIGIN:'https://example.invalid/private'},{BLOG_ORIGIN:'http://example.invalid'},{BLOG_THEME:'../../bad'},{BLOG_PORT:'NaN'}])assert.throws(()=>config(env));
+  assert.equal(config({BLOG_MODE:'production',BLOG_ORIGIN:'https://example.invalid'}).secure,true);
+});
+test('foreign data cannot be adopted',()=>{const f=fixture();try{const c={...f.c,dataDir:join(f.root,'foreign')};mkdirSync(c.dataDir);writeFileSync(join(c.dataDir,'unrelated.txt'),'synthetic');assert.throws(()=>openDatabase(c),/unmarked/);}finally{f.dispose();}});
+test('data junctions are rejected',()=>{const f=fixture();try{const link=join(f.root,'linked');symlinkSync(f.c.dataDir,link,'junction');assert.throws(()=>openDatabase({...f.c,dataDir:link}),/links/);}finally{f.dispose();}});
+test('migrations are idempotent and foreign keys are enforced',()=>{const f=fixture();try{const second=openDatabase(f.c);assert.equal(second.prepare('SELECT COUNT(*) n FROM migrations').get().n,2);assert.equal(second.prepare('PRAGMA foreign_keys').get().foreign_keys,1);assert.throws(()=>second.prepare('INSERT INTO media VALUES (?,?,?,?,?)').run('x','missing','x.webp',1,1));second.close();}finally{f.dispose();}});
+test('password hashing uses salted scrypt and rejects weak input',async()=>{const a=await passwordHash('Synthetic-password-482!');const b=await passwordHash('Synthetic-password-482!');assert.notEqual(a,b);assert.equal(await passwordValid('Synthetic-password-482!',a),true);assert.equal(await passwordValid('wrong',a),false);assert.equal(await passwordValid('anything'),false);assert.equal(await passwordValid('x','bad'),false);await assert.rejects(passwordHash('short'));});
+test('constant time comparison handles unicode and missing values',()=>{assert.equal(equal('é','x'),false);assert.equal(equal(undefined,'x'),false);assert.equal(equal('abc','abc'),true);});
+test('production cookie contract includes Secure, host prefix and no Domain',()=>{const c=config({BLOG_MODE:'production',BLOG_ORIGIN:'https://example.invalid'});assert.equal(cookieName(c),'__Host-blog_session');const header=cookie(c,'synthetic');assert.match(header,/; Secure/);assert.match(header,/HttpOnly; SameSite=Strict/);assert.doesNotMatch(header,/Domain=/);assert.match(cookie(c,'',false,true),/Max-Age=0/);});
+test('password verification concurrency is bounded',async()=>{const encoded=await passwordHash('Synthetic-concurrency-password');const results=await Promise.allSettled([passwordValid('wrong',encoded),passwordValid('wrong',encoded),passwordValid('wrong',encoded)]);assert.equal(results.filter(r=>r.status==='fulfilled').length,2);assert.equal(results.find(r=>r.status==='rejected').reason.status,429);});
+test('markdown strips executable HTML, SVG, unsafe URLs and remote images',()=>{
+  const result=markdown('<script>alert(1)</script><iframe src="https://example.invalid"></iframe><svg onload="alert(1)"></svg><img src="/bad" onerror="alert(1)">\n\n[x](javascript:alert%281%29)\n\n![remote](https://example.invalid/p.png)');
+  assert.doesNotMatch(result,/<script|<iframe|<svg|onerror|javascript:|<img/i);
+  assert.match(markdown('# Heading\n\n**bold**\n\n|A|B|\n|-|-|\n|1|2|'),/<table>/);
+  assert.match(markdown('![local](/media/00000000-0000-4000-8000-000000000000.webp)'),/<img/);
+});
+test('post validation rejects invalid shapes, metadata and dates',()=>{
+  for(const changes of [{slug:'../bad'},{tags:['x'.repeat(41)]},{tags:[{}]},{content:'x'.repeat(262145)},{status:'private'},{publishedAt:'bad'},{title:'\0bad'}])assert.throws(()=>postInput(sample(changes)));
+});
+test('published predicates exclude draft and future everywhere in query layer',async()=>{const f=fixture();try{const user=await account(f.db);savePost(f.db,sample(),user);savePost(f.db,sample({slug:'future',status:'published',publishedAt:'2099-01-01T00:00:00Z'}),user);savePost(f.db,sample({slug:'visible',status:'published'}),user);assert.equal(publicPosts(f.db).total,1);assert.equal(publicPosts(f.db,{tag:'example'}).total,1);}finally{f.dispose();}});
+test('search parameterization and wildcard escaping resist injection',async()=>{const f=fixture();try{const user=await account(f.db);savePost(f.db,sample({status:'published',title:'100% complete'}),user);assert.equal(publicPosts(f.db,{query:"' OR 1=1--"}).total,0);assert.equal(publicPosts(f.db,{query:'%'}).total,1);assert.equal(publicPosts(f.db,{query:'_'}).total,0);assert.throws(()=>publicPosts(f.db,{page:-1}));}finally{f.dispose();}});
+test('ownership, duplicate slug, revisions, tags and delete transaction',async()=>{const f=fixture();try{const owner=await account(f.db,'owner','editor'),other=await account(f.db,'other','editor'),admin=await account(f.db,'admin','admin');const p=savePost(f.db,sample(),owner);assert.throws(()=>savePost(f.db,sample(),owner),e=>e.status===409);assert.throws(()=>savePost(f.db,sample({revision:1}),other,p.id),e=>e.status===403);assert.throws(()=>savePost(f.db,sample({revision:9}),owner,p.id),e=>e.status===409);savePost(f.db,sample({revision:1,tags:['new','new']}),owner,p.id);assert.deepEqual(tagsFor(f.db,p.id),['new']);assert.throws(()=>deletePost(f.db,other,p.id),e=>e.status===403);deletePost(f.db,admin,p.id);assert.equal(f.db.prepare('SELECT count(*) n FROM post_tags').get().n,0);}finally{f.dispose();}});
+test('persistent rate limits survive reopening and expire without sliding',()=>{const f=fixture();try{rate(f.db,'test',2,1000,100);rate(f.db,'test',2,1000,101);const second=openDatabase(f.c);assert.throws(()=>rate(second,'test',2,1000,102),e=>e.status===429&&e.retryAfter===1);rate(second,'test',2,1000,1100);second.close();}finally{f.dispose();}});
+test('sessions expire by idle and absolute deadlines, raw tokens are not stored',async()=>{const f=fixture();try{const user=await account(f.db);const token='a'.repeat(64),now=Date.now();const insert=f.db.prepare('INSERT INTO sessions(token_hash,user_id,csrf,created_at,seen_at,expires_at,auth_version) VALUES (?,?,?,?,?,?,1)');insert.run(hash(token),user.user_id,'b'.repeat(64),now,now,now+28800000);const req={headers:{cookie:`blog_session=${token}`}};assert.ok(session(f.db,req,f.c,now+100));assert.equal(session(f.db,req,f.c,now+1800101),null);assert.equal(f.db.prepare('SELECT token_hash FROM sessions').get(),undefined);insert.run(hash(token),user.user_id,'b'.repeat(64),now-28800000,now,now);assert.equal(session(f.db,req,f.c,now),null);}finally{f.dispose();}});

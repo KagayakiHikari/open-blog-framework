@@ -1,0 +1,47 @@
+{
+  "name": "open-blog-framework",
+  "version": "0.3.0-rc.3",
+  "description": "An independent, self-hosted blog framework with secure defaults.",
+  "private": true,
+  "license": "MIT",
+  "type": "module",
+  "engines": {
+    "node": ">=24.22.1 <25 || >=26.12.1 <27"
+  },
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js",
+    "admin": "node scripts/admin.js",
+    "migrate": "node scripts/migrate.js",
+    "check": "node scripts/check.js",
+    "test": "node --test --test-concurrency=1 tests/*.test.js",
+    "build": "node scripts/build.js",
+    "scan": "node scripts/scan.js",
+    "licenses": "node scripts/licenses.js",
+    "audit:dependencies": "npm audit --omit=dev --audit-level=low",
+    "verify:release": "node scripts/verify-release.js"
+  },
+  "dependencies": {
+    "marked": "18.1.1",
+    "sanitize-html": "2.18.1",
+    "sharp": "0.35.5"
+  },
+  "files": [
+    "src/",
+    "scripts/",
+    "migrations/",
+    "public/",
+    "docs/",
+    "README.md",
+    "SECURITY.md",
+    "CONTRIBUTING.md",
+    "CHANGELOG.md",
+    ".env.example",
+    "package-lock.json",
+    "design.json",
+    "release-files.json",
+    "THIRD_PARTY_NOTICES.md",
+    "third-party/",
+    "LICENSE"
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "subtitle": "记录 / 技术 / 日常",
+  "heroTitle1": "把日常写成故事，",
+  "heroTitle2": "让灵感慢慢生长。",
+  "heroHighlight": "灵感",
+  "heroDescription": "记录微小的发现，也收藏生活的回响。\n这里是一个独立的示例博客，所有内容均为虚构。",
+  "primaryText": "开始阅读",
+  "caption": "LOCAL DEMO · 独立演示资源",
+  "galleryTitle": "一些值得留下的瞬间",
+  "author": "示例作者",
+  "bio": "一个喜欢记录的写作者。\n分享技术笔记，也留住日常灵感。",
+  "noteTitle": "让文字，成为时间的回声。",
+  "noteText": "在这里慢慢记录，在下一次更新时再见。",
+  "footerText": "© {year} 示例小站",
+  "footerTagline": "保持好奇，继续记录。",
+  "logo": "/theme/logo.svg",
+  "favicon": "/theme/logo.svg",
+  "wallpaper": "/theme/wallpaper.svg",
+  "avatar": "/theme/avatar.svg",
+  "font": "\"Segoe UI\", \"Microsoft YaHei\", \"PingFang SC\", sans-serif",
+  "headingFont": "\"Noto Serif SC\", \"Songti SC\", \"SimSun\", serif",
+  "fontFile": "",
+  "accent": "#8170ba",
+  "darkAccent": "#c0afea",
+  "heroAccent": "#ffc2ac",
+  "nav": [
+    { "label": "首页", "href": "/#home-content" },
+    { "label": "文章", "href": "/posts" },
+    { "label": "归档", "href": "/archives" },
+    { "label": "标签", "href": "/tags" },
+    { "label": "搜索", "href": "/search" }
+  ]
+}
