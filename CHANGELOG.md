@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.3.0-rc.4 — local layout correction
+
+- Filled the remaining height of illustrated gallery cards with their existing glass content panel, removing a transparent strip beneath shorter summaries.
+- Preserved cover proportions, responsive gallery layout and existing functionality.
+
 ## 0.3.0-rc.3 — final local review candidate
 
 - Adopted MIT with copyright 2026 KagayakiHikari; first-party distribution rights remain subject to owner confirmation.

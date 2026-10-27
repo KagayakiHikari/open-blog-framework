@@ -2,7 +2,7 @@
 
 ## One-time release; no maintenance commitment
 
-This project is planned as a single public release, currently frozen at candidate 0.3.0-rc.3. There is no commitment to periodic updates, long-term support, issue-response deadlines or future security patches. No actively maintained release line is promised. Operators must track vulnerabilities, maintain their own installation or fork, and discontinue public service if they cannot keep it safe.
+This project is planned as a single public release, currently frozen at candidate 0.3.0-rc.4. There is no commitment to periodic updates, long-term support, issue-response deadlines or future security patches. No actively maintained release line is promised. Operators must track vulnerabilities, maintain their own installation or fork, and discontinue public service if they cannot keep it safe.
 
 Runtime compatibility floors are Node24.22.1 within 24.x and Node26.12.1 within 26.x. These are not ongoing support promises and do not prove every future version was tested. Windows, local Linux and hosted CI results must be recorded separately.
 

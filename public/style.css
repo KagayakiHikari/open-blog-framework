@@ -644,6 +644,11 @@ html:has(.home-experience) {
   z-index: 1;
 }
 
+.gallery-technical .gallery-article-copy,
+.gallery-life .gallery-article-copy {
+  flex: 1;
+}
+
 .gallery-category {
   display: inline-block;
   background: color-mix(in srgb,var(--hero-accent) 35%,#f4e3d4);
