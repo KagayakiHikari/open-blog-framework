@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.0.0 — prepared for the sole planned public release
+
+- Froze the existing feature set and adopted the final version number; publication remains pending.
+- Retained MIT licensing, third-party notices, security validation and deployment documentation.
+- No ongoing development, maintenance, response deadline or future patch commitment.
+
 ## 0.3.0-rc.4 — local layout correction
 
 - Filled the remaining height of illustrated gallery cards with their existing glass content panel, removing a transparent strip beneath shorter summaries.
