@@ -2,7 +2,7 @@
 
 ## One-time release; no maintenance commitment
 
-This project is prepared for a single public release, version 1.0.0, with publication approval still pending. There is no commitment to periodic updates, long-term support, issue-response deadlines or future security patches. No actively maintained release line is promised. Operators must track vulnerabilities, maintain their own installation or fork, and discontinue public service if they cannot keep it safe.
+This project has a single release version, 1.0.0. There is no commitment to periodic updates, long-term support, issue-response deadlines or future security patches. No actively maintained release line is promised. Operators must track vulnerabilities, maintain their own installation or fork, and discontinue public service if they cannot keep it safe.
 
 Runtime compatibility floors are Node24.22.1 within 24.x and Node26.12.1 within 26.x. These are not ongoing support promises and do not prove every future version was tested. Windows, local Linux and hosted CI results must be recorded separately.
 

@@ -8,7 +8,7 @@ Its server-rendered architecture provides article management, Markdown editing, 
 
 ## Project status
 
-Only one public release, **v1.0.0**, is planned. It has not been published yet. Features are frozen, with no further iteration, long-term maintenance, feature updates, regular security patches, or issue-response deadlines promised.
+The sole release version is **v1.0.0**. Features are frozen, with no further iteration, long-term maintenance, feature updates, regular security patches, or issue-response deadlines promised.
 
 You may fork, modify, and redistribute the project under its license. Operators are responsible for tracking runtime, dependency, and application vulnerabilities and maintaining their own deployment or fork. Discontinue public service if you cannot keep it safe.
 
@@ -108,6 +108,6 @@ Detailed guides below are currently in Simplified Chinese; the security policy a
 
 ## License
 
-This project uses the [MIT License](LICENSE), with **Copyright (c) 2026 KagayakiHikari**. Third-party icons and dependencies retain their own licenses and notices. This is still an unpublished candidate with `private: true`; selecting a license does not authorize public release.
+This project uses the [MIT License](LICENSE), with **Copyright (c) 2026 KagayakiHikari**. Third-party icons and dependencies retain their own licenses and notices.
 
-All demonstration inputs are fictional. Validation and deployment guidance are retained. Publication still requires explicit approval from the maintainer.
+All demonstration inputs are fictional. Validation and deployment guidance are retained for operators and forks.

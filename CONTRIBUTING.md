@@ -1,6 +1,6 @@
 # Contributing
 
-The project uses the MIT License; see LICENSE. Keep the applicable third-party notices. This candidate remains under local review; license selection does not authorize uploading or publishing this repository.
+The project uses the MIT License; see LICENSE. Keep the applicable third-party notices when modifying or redistributing the source.
 
 This is a one-time release with frozen features. There is no commitment to accept pull requests, provide regular updates or deliver future security patches. Forks remain the responsibility of their own maintainers; these validation instructions are not a maintenance promise.
 
