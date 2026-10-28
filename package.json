@@ -33,6 +33,7 @@
     "public/",
     "docs/",
     "README.md",
+    "README.zh-CN.md",
     "SECURITY.md",
     "CONTRIBUTING.md",
     "CHANGELOG.md",

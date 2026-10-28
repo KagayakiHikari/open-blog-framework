@@ -1,54 +1,56 @@
 # Open Blog Framework
 
-一个基于 Node.js 和 SQLite 构建的轻量级博客框架，定位为个人独立开发的开源示范作品，适合作为个人博客开发、学习与二次开发的参考。
+English | [简体中文](README.zh-CN.md)
 
-采用服务端渲染架构，提供文章管理、Markdown 编辑、标签与搜索、归档时间轴、媒体管理、后台权限控制、响应式主题及基础 SEO 功能。项目以简洁的架构、独立部署能力和可定制界面为目标。
+A lightweight blog framework built with Node.js and SQLite. This personal open-source demonstration project is intended as a reference for learning, building a personal blog, and further development.
 
-## 项目状态
+Its server-rendered architecture provides article management, Markdown editing, tags and search, an archive timeline, media management, administration with role-based permissions, a responsive theme, and basic SEO. The project focuses on a simple architecture, independent deployment, and customizable presentation.
 
-仅计划发布一个正式版本 **v1.0.0**，目前尚未公开发布。功能已冻结，不计划继续迭代，不提供长期维护、功能更新或定期安全补丁，亦不承诺问题响应时限。
+## Project status
 
-欢迎开发者根据项目许可证进行 Fork、修改与二次开发。部署者需自行跟踪运行时、依赖及应用漏洞，维护自己的部署或分支；无法维护时应停止对外服务。
+Only one public release, **v1.0.0**, is planned. It has not been published yet. Features are frozen, with no further iteration, long-term maintenance, feature updates, regular security patches, or issue-response deadlines promised.
 
-本项目不设漏洞反馈接收渠道，不提供监测、响应或修复服务。请自行维护部署，勿在公开 Issue 或讨论中披露凭据、私人日志、用户数据或敏感利用细节，详见 [安全政策](SECURITY.md)。
+You may fork, modify, and redistribute the project under its license. Operators are responsible for tracking runtime, dependency, and application vulnerabilities and maintaining their own deployment or fork. Discontinue public service if you cannot keep it safe.
 
-## 技术架构
+The project offers no vulnerability reporting channel, monitoring, response, or remediation service. Do not disclose credentials, private logs, user data, or sensitive exploit details in public issues or discussions. See [SECURITY.md](SECURITY.md).
 
-- Node.js ESM 与原生 HTTP 服务。
-- SQLite 本地数据库，通过 node:sqlite 访问。
-- 服务端 HTML 渲染与原生 JavaScript／CSS。
-- marked、sanitize-html 处理 Markdown，Sharp 处理图片，精确版本见锁文件。
+## Architecture
 
-运行时不需要外部数据库、CDN、字体服务或私人服务接口。
+- Node.js ESM and the native HTTP server.
+- A local SQLite database accessed through `node:sqlite`.
+- Server-rendered HTML with native JavaScript and CSS.
+- `marked` and `sanitize-html` for Markdown; Sharp for image processing. Exact versions are recorded in the lockfile.
 
-## 已实现功能
+The application does not require an external database, CDN, font service, or private service API at runtime.
 
-- 文章增删改、草稿、到期可见的定时发布、修订冲突检查。
-- Markdown、表格、安全 HTML 清理、本地图片、摘要、标签和分页搜索。
-- /archives 年份时间轴、UTC 年份筛选、每页最多30篇、原生折叠及手机布局。
-- 管理员／编辑权限、后台编辑器、媒体库、会话撤销和操作审计。
-- 图片验证与独立子进程重新编码，上传和处理并发限制。
-- RSS、站点地图、robots、canonical 与描述信息。
-- 浮动玻璃导航、文章画廊、明暗主题、响应式布局及可配置网站标识。
+## Features
 
-## 功能限制
+- Article creation, editing, deletion, drafts, scheduled publication, and revision-conflict detection.
+- Markdown, tables, HTML sanitization, local images, summaries, tags, and paginated search.
+- An `/archives` timeline with UTC year filtering, up to 30 articles per page, native disclosure controls, and mobile layouts.
+- Administrator and editor permissions, a backend editor, media library, session revocation, and audit records.
+- Image validation and re-encoding in isolated child processes, with upload and processing concurrency limits.
+- RSS, sitemap, robots directives, canonical URLs, and descriptions.
+- Floating glass navigation, an article gallery, light and dark themes, responsive layouts, and configurable site identity.
 
-仅支持单个 Web 进程；SQLite 和 LIKE 搜索面向小型站点，不支持集群。CLI 与 Web 的凭据变更使用 SQLite 事务协调，不代表支持多个 Web 实例。
+## Limitations
 
-没有音乐页面／播放器、评论、公开注册、独立分类树、ZIP 导入、远程抓图或在线插件市场，不承诺后续开发。现有代码级扩展入口运行可信代码，不是沙箱插件系统。媒体 URL 是公开资源，草稿不使媒体变成私密附件。
+Only one web process is supported. SQLite and LIKE-based search are intended for small sites; clustering is not supported. Credential changes made by the CLI and web server are coordinated through SQLite transactions, which does not imply support for multiple web instances.
 
-## 快速安装
+There is no music page or player, comments, public registration, separate category tree, ZIP import, remote image fetching, or online plugin marketplace. Future development is not promised. The existing code-level extension interface runs trusted code; it is not a sandbox. Media URLs are public, including images referenced by drafts.
 
-使用自己的独立目录。运行时下限为 **Node24.22.1+ 的24.x** 或 **26.12.1+ 的26.x**；这是兼容性与安全基线，不是维护承诺，也不表示所有未来版本均已测试。
+## Quick start
+
+Use your own dedicated directory. The supported runtime floors are **Node.js 24.22.1 or later within 24.x**, or **26.12.1 or later within 26.x**. These are compatibility and security baselines, not ongoing support promises or proof that every future version has been tested.
 
 ~~~sh
 npm ci --ignore-scripts
 npm run migrate
 ~~~
 
-保留 optional 包，Sharp 需要平台预编译依赖。首次初始化不创建默认账号、口令或示例文章，也不导入既有数据。
+Keep optional packages enabled: Sharp requires platform-specific prebuilt dependencies. Initialization does not create a default account, password, or example articles, and does not import existing data.
 
-管理员密码必须全新、唯一、16–256字节，通过标准输入传入，不放入命令参数、环境变量或 Git。以下使用 Bash：
+Create an administrator with a fresh, unique password of 16–256 bytes, supplied through standard input. Do not put passwords in command arguments, exported environment variables, or Git. In Bash:
 
 ~~~bash
 read -rs -p 'New unique passphrase: ' BLOG_INPUT; printf '\n'
@@ -57,53 +59,55 @@ unset BLOG_INPUT
 npm start
 ~~~
 
-Windows PowerShell 静默输入示例见 [安装说明](docs/INSTALL.md)。operator 只是示例用户名，不会自动创建。打开 [本地博客](http://localhost:4300)，管理登录入口为 /login。
+A silent-input PowerShell example is available in the [installation guide](docs/INSTALL.md). `operator` is an example username and is not created automatically. Open the [local blog](http://localhost:4300); the administration login is at `/login`.
 
-默认数据位于独立 var/。如复制 .env.example 为本地 .env，须显式加载；迁移、账号工具和服务使用同一配置：
+Data is stored in the dedicated `var/` directory by default. If you copy `.env.example` to a local `.env`, load it explicitly and use the same configuration for migrations, account commands, and the server:
 
 ~~~sh
 node --env-file=.env scripts/migrate.js
 node --env-file=.env src/server.js
 ~~~
 
-账号工具使用相同的 node --env-file=.env scripts/admin.js 前缀，并继续通过标准输入传密码。应用不隐式读取 .env。
+For account commands, use the same `node --env-file=.env scripts/admin.js` prefix and continue to pipe passwords through standard input. The application does not load `.env` implicitly.
 
-## 主题与归档
+## Theme and archives
 
-design.json 配置 Logo、Favicon、背景、首页文案、简介、导航、页脚、配色与字体；名称及描述使用环境变量。主题支持 light／dark／system，兼容 paper／night。默认资源为本站 SVG，图标附带第三方通知。
+Configure the logo, favicon, background, homepage text, profile, navigation, footer, colors, and fonts in `design.json`. The site name and description use environment variables. Theme options are `light`, `dark`, and `system`, with `paper` and `night` aliases. Default assets are local SVG files; icons include third-party notices.
 
-归档使用独立数据库中的公开文章，采用与主题一致的玻璃面板。年份表单与原生折叠不依赖脚本生成；完整禁用脚本的浏览器验收须单独记录。
+Archives display public articles from the independent database in matching glass panels. The year form and native disclosure controls do not require JavaScript to generate their content. Browser acceptance testing with JavaScript completely disabled must be recorded separately.
 
-## 安全部署与备份恢复
+## Secure deployment and recovery
 
-1. 仅使用自己的账号、数据、域名和代理；生产模式要求自己的 HTTPS origin，应用绑定回环地址，不直接暴露开发 HTTP 服务。
-2. 使用低权限服务账号、只读源码和独立可写数据目录；设置系统 CPU／内存／磁盘限制及文件权限／NTFS ACL。
-3. 代理保持配置的 Host。应用不信任未经验证的转发头；代理后访问者共享 peer 配额，可能影响高访问量站点。
-4. 停止 Web 实例和媒体任务后备份完整数据目录，不仅复制运行中的 SQLite 主文件。备份含正文、密码哈希和会话，须私密保存并按自己的流程加密。
-5. 恢复至隔离目录并检查数据库和媒体。恢复会回退密码与撤销状态；重新开放流量前，用账号 CLI 撤销所有恢复账号的会话，核实现行密码，必要时重设。
+1. Use your own accounts, data, domain, and proxy. Production mode requires your own HTTPS origin. The application binds to a loopback address; do not expose the development HTTP server directly.
+2. Use a low-privilege service account, read-only application source, and a dedicated writable data directory. Apply operating-system CPU, memory, disk, and file-permission or NTFS ACL limits.
+3. Have the proxy preserve the configured Host. The application does not trust forwarded headers. Clients behind a proxy share the socket-peer quota, which may limit higher-traffic deployments.
+4. Stop the web process and media tasks before backing up the complete data directory. Do not copy only the main SQLite file while it is running. Backups contain article content, password hashes, and sessions; store them privately and encrypt them through your own backup process.
+5. Restore into an isolated directory and verify the database and media. Restoration rolls back credentials and revocation state. Before admitting traffic, use the account CLI to revoke sessions for every restored account, verify current credentials, and reset passwords when necessary.
 
-详见 [部署与恢复](docs/DEPLOYMENT.md)。应用测试不替代 HTTPS、代理、系统权限、备份介质和灾难恢复验收；持续运维责任由部署者承担。
+See the [deployment and recovery guide](docs/DEPLOYMENT.md). Application tests do not replace validation of HTTPS, proxy configuration, OS permissions, backup storage, or disaster recovery. Operators remain responsible for ongoing operation.
 
-## 验证与交付
+## Verification and distribution
 
-在全新安装、无 dist/ 的干净副本执行：
+In a freshly installed, clean copy without an existing `dist/` directory, run:
 
 ~~~sh
 npm ci --ignore-scripts
 npm run verify:release
 ~~~
 
-流程包含语法、单元／集成／安全回归、依赖审计、逐文件构建、扫描及独立安装启动。运行包含明确白名单文件和 SHA-256 清单，不是压缩编译；不含 Git、真实环境配置、数据库、日志、依赖或生成的测试数据。完整源码另含 CI 和合成测试源码。
+The workflow performs syntax checks, unit, integration and security regression tests, dependency auditing, file-by-file builds, scanning, and independent installation and startup verification. The runtime distribution uses an explicit file allowlist and SHA-256 manifest; it is not a minified bundle. It excludes Git, real environment configuration, databases, logs, dependencies, and generated test data. The complete source also includes CI definitions and synthetic tests.
 
-CI 定义覆盖 Windows／Ubuntu 与两个精确 Node 版本；工作流存在不代表 GitHub 托管 CI 已执行。本地 Windows、WSL Linux 与托管 runner 证据须分别记录。测试通过或 npm 零告警不构成无风险保证。
+CI defines Windows and Ubuntu jobs for two exact Node.js versions. A workflow definition does not prove that GitHub-hosted CI has run. Record local Windows, WSL Linux, and hosted-runner results separately. Passing tests or a clean npm audit is not a guarantee of safety.
 
-- [安装](docs/INSTALL.md) · [部署与恢复](docs/DEPLOYMENT.md)
-- [架构](docs/ARCHITECTURE.md) · [设计系统](docs/DESIGN-SYSTEM.md) · [归档](docs/ARCHIVES.md)
-- [安全政策](SECURITY.md) · [验证流程](docs/AUDIT.md)
-- [第三方通知](THIRD_PARTY_NOTICES.md) · [资源说明](docs/ASSET-LICENSES.md) · [依赖清单](docs/dependency-inventory.json)
+Detailed guides below are currently in Simplified Chinese; the security policy and third-party notices are available in English.
 
-## 开源许可
+- [Installation](docs/INSTALL.md) · [Deployment and recovery](docs/DEPLOYMENT.md)
+- [Architecture](docs/ARCHITECTURE.md) · [Design system](docs/DESIGN-SYSTEM.md) · [Archives](docs/ARCHIVES.md)
+- [Security policy](SECURITY.md) · [Verification workflow](docs/AUDIT.md)
+- [Third-party notices](THIRD_PARTY_NOTICES.md) · [Assets](docs/ASSET-LICENSES.md) · [Dependency inventory](docs/dependency-inventory.json)
 
-本项目采用 [MIT License](LICENSE)，版权署名为 **Copyright (c) 2026 KagayakiHikari**。第三方图标和依赖遵循各自许可并保留相应通知。当前仍是未公开候选，保留 private:true；许可选择不代表公开发布已经获得批准。
+## License
 
-所有演示输入均为虚构。验证与部署说明予以保留；公开发布仍需维护者明确批准。
+This project uses the [MIT License](LICENSE), with **Copyright (c) 2026 KagayakiHikari**. Third-party icons and dependencies retain their own licenses and notices. This is still an unpublished candidate with `private: true`; selecting a license does not authorize public release.
+
+All demonstration inputs are fictional. Validation and deployment guidance are retained. Publication still requires explicit approval from the maintainer.

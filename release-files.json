@@ -1,6 +1,7 @@
 [
   ".env.example",
   ".npmrc",
+  "README.zh-CN.md",
   "CHANGELOG.md",
   "CONTRIBUTING.md",
   "design.json",
